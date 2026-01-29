@@ -15,24 +15,25 @@ public class Swipe : MonoBehaviour
     private UnityEvent onSwipeLeft;
     [SerializeField]
     private UnityEvent onSwipeRight;
-    private Vector2 starPosition;
+    private Vector2 startPosition;
     private void Update()
     {
         if (!isActive) return;
 
         if(Input.GetMouseButtonDown(0))
         {
-            starPosition = Input.mousePosition;
+            startPosition = Input.mousePosition;
         }
         
         if (Input.GetMouseButtonUp(0))
         {
             Vector2 endPosition = Input.mousePosition;
-            Vector2 swipeVector = endPosition - starPosition;
+            Vector2 swipeVector = endPosition - startPosition;
+
             if(swipeVector.magnitude >= minSwipeDistance)
             {
-                
-            } DetectSwipeDirection(swipeVector);
+                DetectSwipeDirection(swipeVector);
+            } 
         }
     }
 private void DetectSwipeDirection(Vector2 swipeVector)
@@ -47,7 +48,7 @@ private void DetectSwipeDirection(Vector2 swipeVector)
     {
         onSwipeUp?.Invoke();
     }
-    else if (angle >= 135f || angle <= 135f)
+    else if (angle >= 135f || angle <= -135f)
     {
         onSwipeLeft?.Invoke();
     }
